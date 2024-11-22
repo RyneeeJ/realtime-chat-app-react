@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
 
+import Header from "./Header";
+
 function RootLayout() {
   return (
     <div className="mx-auto max-w-6xl bg-red-300">
-      <header>HEADER</header>
+      <Header />
       <main>
         <Outlet />
       </main>

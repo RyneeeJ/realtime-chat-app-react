@@ -1,21 +1,26 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
-import RootLayout from "./components/RootLayout";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import AddFriend from "./pages/AddFriend";
 import Login from "./pages/Login";
 import FriendRequests from "./pages/FriendRequests";
 import ChatWindow from "./pages/ChatWindow";
 import Home from "./pages/Home";
+import RootLayout from "./components/RootLayout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    element: <RootLayout />,
+    element: (
+      <ProtectedRoute>
+        <RootLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      { index: true, element: <Navigate to="/chat" /> },
-      { path: "/chat", element: <Home /> },
+      { path: "/", element: <Home /> },
       {
         path: "/chat/:chatId",
         element: <ChatWindow />,
@@ -33,7 +38,14 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </>
+  );
 }
 
 export default App;
