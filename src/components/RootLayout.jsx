@@ -10,6 +10,7 @@ function RootLayout() {
 
   useEffect(() => {
     async function createUser() {
+      // Create user profile in 'users' table if signed in for the first time
       await insertUser({
         email: user.email,
         name: user.user_metadata.full_name,
@@ -19,8 +20,9 @@ function RootLayout() {
 
     createUser();
   }, [user.email, user.user_metadata.full_name, user.user_metadata.avatar_url]);
+
   return (
-    <div className="mx-auto max-w-6xl bg-red-300">
+    <div className="mx-auto max-w-6xl">
       <Header />
       <main>
         <Outlet />
