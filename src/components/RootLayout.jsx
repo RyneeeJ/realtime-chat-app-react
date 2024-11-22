@@ -22,9 +22,9 @@ function RootLayout() {
   }, [user.email, user.user_metadata.full_name, user.user_metadata.avatar_url]);
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto flex h-full max-w-6xl flex-col">
       <Header />
-      <main>
+      <main className="flex-1 px-4 py-3">
         <Outlet />
       </main>
     </div>

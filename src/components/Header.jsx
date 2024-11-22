@@ -1,11 +1,10 @@
-import { useLogout } from "../hooks/useLogout";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 
 function Header() {
-  const { signOut, isPending } = useLogout();
   return (
-    <div className="flex justify-between">
-      <div>LOGO</div>
-      <button onClick={signOut}>{isPending ? "LOADING..." : "Sign Out"}</button>
+    <div className="flex h-14 items-center justify-between border-b border-gray-400 px-4">
+      <div className="text-2xl font-semibold">LOGO</div>
+      <Bars3Icon className="size-10" />
     </div>
   );
 }
