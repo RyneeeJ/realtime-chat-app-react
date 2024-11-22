@@ -11,5 +11,10 @@ export function useUser() {
     queryFn: getCurrentUser,
   });
 
-  return { error, isPending, isAuthenticated: user?.role === "authenticated" };
+  return {
+    error,
+    isPending,
+    isAuthenticated: user?.role === "authenticated",
+    user,
+  };
 }

@@ -1,5 +1,24 @@
 import { supabase } from "./supabase";
 
+export async function insertUser(curUser) {
+  try {
+    const { data: existingUser } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", curUser.email);
+
+    if (existingUser.length) return;
+    console.log("existingUser:", existingUser);
+
+    await supabase.from("users").insert([curUser]);
+
+    console.log("USER CREATED");
+  } catch (error) {
+    console.log("ERROR 💥💥💥", error.message);
+    throw new Error(error.message);
+  }
+}
+
 export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
