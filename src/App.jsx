@@ -9,6 +9,10 @@ import Home from "./pages/Home";
 import RootLayout from "./components/RootLayout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./components/ErrorFallback";
+import PublicRoute from "./components/PublicRoute";
+import PageNotFound from "./pages/PageNotFound";
 
 const queryClient = new QueryClient();
 
@@ -16,11 +20,16 @@ const router = createBrowserRouter([
   {
     element: (
       <ProtectedRoute>
-        <RootLayout />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <RootLayout />
+        </ErrorBoundary>
       </ProtectedRoute>
     ),
     children: [
-      { path: "/", element: <Home /> },
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "/chat/:chatId",
         element: <ChatWindow />,
@@ -34,7 +43,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   },
 ]);
 function App() {

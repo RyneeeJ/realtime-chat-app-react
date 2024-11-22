@@ -13,6 +13,10 @@ export function useLogout() {
       console.log("Logged out!");
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
+    onError: (error) => {
+      console.log("💥", error);
+    },
+    throwOnError: true,
   });
 
   return { isPending, error, signOut };
