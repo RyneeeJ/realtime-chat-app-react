@@ -8,9 +8,11 @@ function Login() {
     <div className="flex h-full items-center justify-center">
       <div>
         <div>LOGO HERE</div>
-        <h2 className="mb-1 text-[2.5rem] font-bold">ReactTalks</h2>
+        <h2 className="mb-1 text-[2.5rem] font-bold">
+          <span className="text-blue-600">React</span>Talks
+        </h2>
         <p className="mb-10 italic">React. Chat. Connect.</p>
-        <Button onClick={signIn} type="large">
+        <Button onClick={signIn} color="blue" size="large">
           <div className="flex items-center gap-3">
             <span>
               <img

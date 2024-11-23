@@ -24,7 +24,7 @@ function RootLayout() {
   return (
     <div className="mx-auto flex h-full max-w-6xl flex-col">
       <Header />
-      <main className="flex-1 px-4 py-3">
+      <main className="flex-1 overflow-auto px-6 py-4">
         <Outlet />
       </main>
     </div>
