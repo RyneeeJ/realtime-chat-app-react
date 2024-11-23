@@ -1,13 +1,27 @@
+import Button from "../components/Button";
 import { useLogin } from "../hooks/useLogin";
 
 function Login() {
   const { signIn } = useLogin();
 
   return (
-    <div>
-      <div>LOGO</div>
-      <p>Welcome to ReactTalks!</p>
-      <button onClick={signIn}>Sign in with Google</button>
+    <div className="flex h-full items-center justify-center">
+      <div>
+        <div>LOGO HERE</div>
+        <h2 className="mb-1 text-[2.5rem] font-bold">ReactTalks</h2>
+        <p className="mb-10 italic">React. Chat. Connect.</p>
+        <Button onClick={signIn} type="large">
+          <div className="flex items-center gap-3">
+            <span>
+              <img
+                className="size-6"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
+              />
+            </span>
+            <span>Sign in with Google</span>
+          </div>
+        </Button>
+      </div>
     </div>
   );
 }

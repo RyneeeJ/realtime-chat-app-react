@@ -4,7 +4,9 @@ function Header() {
   return (
     <div className="flex h-14 items-center justify-between border-b border-gray-400 px-4">
       <div className="text-2xl font-semibold">LOGO</div>
-      <Bars3Icon className="size-10" />
+      <button className="cursor-pointer">
+        <Bars3Icon className="size-10" />
+      </button>
     </div>
   );
 }

@@ -9,7 +9,7 @@ function Home() {
       <p className="mb-10 text-lg font-extralight text-gray-400">
         Click to add/message a friend
       </p>
-      <Button>Open Dashboard</Button>
+      <Button type="large">Open Dashboard</Button>
     </div>
   );
 }
