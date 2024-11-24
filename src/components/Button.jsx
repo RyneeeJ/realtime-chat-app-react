@@ -4,12 +4,12 @@ const variants = {
   color: {
     blue: "bg-blue-600 hover:bg-blue-700 text-slate-100",
     white:
-      "bg-gray-200 ring-1 ring-inset ring-blue-600 text-blue-600 hover:bg-gray-300",
+      "bg-slate-100 ring-1 ring-inset ring-blue-600 text-blue-600 hover:bg-gray-200",
   },
   size: {
-    large: "rounded-lg px-8 py-3 font-bold ",
-    medium: "px-6 py-2 rounded-md font-bold ",
-    small: "px-5 py-1 rounded-md ",
+    large: "rounded-lg px-8 py-3 font-bold",
+    medium: "px-6 py-2 rounded-md font-bold",
+    small: "px-5 py-1 rounded-md",
   },
 };
 
