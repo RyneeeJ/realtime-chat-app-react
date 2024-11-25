@@ -7,7 +7,6 @@ for (let i = 0; i < 12; i++) {
   arr.push({ id: i + 1, status: i % 3 === 0 ? "sent" : "received" });
 }
 
-console.log(arr);
 function ChatMessages() {
   const bottomRef = useRef(null);
 

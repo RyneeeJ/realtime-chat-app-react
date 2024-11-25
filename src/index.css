@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+.slide-in-out {
+  transition: transform 0.3s ease-in-out;
+}
+
 @layer base {
   html {
     font-family: "Inter", system-ui, sans-serif;

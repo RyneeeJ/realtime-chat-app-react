@@ -1,6 +1,8 @@
 import Button from "../components/Button";
+import { useSlider } from "../contexts/SliderContext";
 
 function Home() {
+  const { handleOpen } = useSlider();
   return (
     <div className="mt-44 text-center">
       <h1 className="mb-6 text-4xl font-bold leading-[44px]">
@@ -9,7 +11,7 @@ function Home() {
       <p className="mb-10 text-lg font-extralight text-gray-400">
         Click to add/message a friend
       </p>
-      <Button color="blue" size="large">
+      <Button onClick={handleOpen} color="blue" size="large">
         Open Dashboard
       </Button>
     </div>
