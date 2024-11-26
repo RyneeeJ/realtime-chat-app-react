@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const SliderContext = createContext({
   isNavOpen: "",
@@ -11,6 +11,22 @@ export function SliderContextProvider({ children }) {
 
   const handleOpen = () => setIsNavOpen(true);
   const handleClose = () => setIsNavOpen(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsNavOpen(false);
+      }
+    };
+
+    // Attach event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <SliderContext.Provider value={{ isNavOpen, handleClose, handleOpen }}>

@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-function SideNavLink({
-  children,
-  to,
-  isActive = false,
-  icon,
-  className,
-  onClick,
-}) {
+function SideNavLink({ children, to, icon, className, onClick }) {
+  const { pathname } = useLocation();
+
+  const isActive = pathname === to;
+
   return (
     <Link
       onClick={onClick}

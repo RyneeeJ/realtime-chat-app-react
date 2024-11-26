@@ -1,5 +1,5 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import SideNav from "./SideNav";
+import SliderNav from "./SliderNav";
 
 import { useEffect } from "react";
 import { useSlider } from "../contexts/SliderContext";
@@ -22,12 +22,12 @@ function Header() {
     <>
       <div className="flex h-14 items-center justify-between border-b border-gray-400 px-4">
         <div className="text-2xl font-semibold">Logo</div>
-        <button className="cursor-pointer" onClick={handleOpen}>
+        <button className="cursor-pointer md:hidden" onClick={handleOpen}>
           <Bars3Icon className="size-10" />
         </button>
       </div>
 
-      <SideNav isNavOpen={isNavOpen} onClose={handleClose} />
+      <SliderNav isNavOpen={isNavOpen} onClose={handleClose} />
     </>
   );
 }

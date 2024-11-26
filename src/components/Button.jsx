@@ -9,7 +9,8 @@ const variants = {
   size: {
     large: "rounded-lg px-8 py-3 font-bold",
     medium: "px-6 py-2 rounded-md font-bold",
-    small: "px-5 py-1 rounded-md",
+    small:
+      "px-3 py-1 xs:px-5 rounded-md sm:text-lg sm:px-6 md:text-base lg:text-lg",
   },
 };
 

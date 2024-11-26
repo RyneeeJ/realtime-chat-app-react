@@ -3,15 +3,15 @@ import Friends from "./Friends";
 import SideNavHeader from "./SideNavHeader";
 import SideNavLinksList from "./SideNavLinksList";
 
-function SideNav({ onClose, isNavOpen }) {
+function SliderNav({ onClose, isNavOpen }) {
   return (
     <>
       <div
-        className={`absolute bottom-0 top-0 w-full backdrop-blur-sm transition-all duration-500 ${!isNavOpen && "invisible opacity-0"}`}
+        className={`absolute bottom-0 top-0 w-full backdrop-blur-sm transition-all duration-500 ${!isNavOpen && "invisible opacity-0"} md:hidden`}
         onClick={onClose}
       ></div>
       <div
-        className={`absolute bottom-0 right-0 top-0 z-10 flex w-4/5 flex-col bg-slate-100 shadow-lg transition-all duration-1000 ${!isNavOpen && "pointer-events-none translate-x-full opacity-0"}`}
+        className={`xs:w-[350px] absolute bottom-0 right-0 top-0 z-10 flex w-11/12 flex-col bg-slate-100 shadow-lg transition-all duration-1000 ${!isNavOpen && "pointer-events-none translate-x-full opacity-0"} md:hidden`}
       >
         <SideNavHeader onClose={onClose} />
         <Friends />
@@ -22,4 +22,4 @@ function SideNav({ onClose, isNavOpen }) {
   );
 }
 
-export default SideNav;
+export default SliderNav;

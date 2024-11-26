@@ -6,6 +6,8 @@ import { useUser } from "../hooks/useUser";
 import { insertUser } from "../services/apiAuth";
 import { SliderContextProvider } from "../contexts/SliderContext";
 
+import Sidebar from "./Sidebar";
+
 function RootLayout() {
   const { user } = useUser();
 
@@ -26,8 +28,12 @@ function RootLayout() {
     <SliderContextProvider>
       <div className="relative mx-auto flex h-full max-w-6xl flex-col overflow-x-hidden">
         <Header />
-        <main className="flex-1 overflow-y-auto px-6">
-          <Outlet />
+
+        <main className="xs:px-6 flex-1 overflow-y-auto px-4 md:flex md:px-0">
+          <Sidebar />
+          <div className="md:flex-1 md:px-6">
+            <Outlet />
+          </div>
         </main>
       </div>
     </SliderContextProvider>
