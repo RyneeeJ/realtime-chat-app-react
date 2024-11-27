@@ -1,11 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 
-const FriendRequests = createContext();
+const FriendRequests = createContext({
+  requests: [],
+});
 
-export function FriendRequestsProvider({ children }) {
-  // eslint-disable-next-line no-unused-vars
-  const [requests, setRequests] = useState();
+export function FriendRequestsProvider({
+  children,
+  curUserId,
+  initialRequests,
+}) {
+  const [requests, setRequests] = useState(initialRequests || []);
 
   useEffect(() => {
     const channel = supabase
@@ -14,13 +19,25 @@ export function FriendRequestsProvider({ children }) {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "friend_requests" },
         (payload) => {
-          console.log("Change received!", payload);
+          if (payload.new.receiver_id === curUserId) {
+            setRequests((requests) => [payload.new, ...requests]);
+          }
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "friend_requests" },
+        (payload) => {
+          setRequests((requests) =>
+            requests.filter((request) => request.id !== payload.old.id),
+          );
         },
       )
       .subscribe();
 
     return () => supabase.removeChannel(channel);
-  }, []);
+  }, [curUserId, initialRequests]);
+
   return (
     <FriendRequests.Provider value={{ requests }}>
       {children}

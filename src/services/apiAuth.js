@@ -8,11 +8,15 @@ export async function insertUser(curUser) {
       .eq("email", curUser.email);
 
     if (existingUser.length) return;
-    console.log("existingUser:", existingUser);
 
-    await supabase.from("users").insert([curUser]);
+    console.log("curuser obj", curUser);
+    const { data, error } = await supabase
+      .from("users")
+      .insert([curUser])
+      .select();
 
-    console.log("USER CREATED");
+    console.log(data, error);
+    console.log("new user created");
   } catch (error) {
     console.log("ERROR 💥💥💥", error.message);
     throw new Error(error.message);

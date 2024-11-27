@@ -1,56 +1,28 @@
+import { useEffect } from "react";
+import { useFriendRequests } from "../contexts/FriendRequestsContext";
+import { useRequesterDetails } from "../hooks/useRequesterDetails";
+
 import RequestItem from "./RequestItem";
 
-const requests = [
-  {
-    userId: 1,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    requestId: 123,
-  },
-  {
-    userId: 2,
-    name: "James Gandia",
-    email: "imjamesgandia@gmail.com",
-    image: "/default-img.jpg",
-    requestId: 23,
-  },
-  {
-    userId: 3,
-    name: "James Gandia",
-    email: "imjamesgandia@gmail.com",
-    image: "/default-img.jpg",
-    requestId: 21,
-  },
-  {
-    userId: 4,
-    name: "James Gandia",
-    email: "imjamesgandia@gmail.com",
-    image: "/default-img.jpg",
-    requestId: 31,
-  },
-  {
-    userId: 5,
-    name: "James Gandia",
-    email: "imjamesgandia@gmail.com",
-    image: "/default-img.jpg",
-    requestId: 2231,
-  },
-  {
-    userId: 6,
-    name: "James Gandia",
-    email: "imjamesgandia@gmail.com",
-    image: "/default-img.jpg",
-    requestId: 451,
-  },
-];
-
 function RequestsList() {
+  const { requests } = useFriendRequests();
+
+  const { requestsWithDetails, refetch } = useRequesterDetails(requests);
+
+  useEffect(() => {
+    refetch();
+  }, [requests, refetch]);
+
   return (
     <ul className="space-y-3">
-      {requests.map((request) => (
-        <RequestItem key={request.requestId} request={request} />
-      ))}{" "}
+      {requestsWithDetails.map((request) => (
+        <RequestItem key={request.id} requester={request.requesterDetails} />
+      ))}
+      {requests.length === 0 && (
+        <p className="text-lg text-gray-400 md:text-xl">
+          No friend requests yet...
+        </p>
+      )}
     </ul>
   );
 }

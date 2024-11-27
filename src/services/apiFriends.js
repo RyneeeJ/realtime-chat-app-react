@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { supabase } from "./supabase";
 
 async function getUserByEmail(email) {
@@ -82,10 +83,6 @@ export async function addFriend({ curUserEmail, friendEmail }) {
       getUserByEmail(friendEmail),
     ]);
 
-    const idsObj = {
-      curUserId: curUser.id,
-      friendId: friendExist.id,
-    };
     // 1. Validate input email:
     // If input email same as email of current user, return error message
     if (curUserEmail === friendEmail)
@@ -95,6 +92,10 @@ export async function addFriend({ curUserEmail, friendEmail }) {
     if (!friendExist)
       throw new Error("This email is not registered in this app");
 
+    const idsObj = {
+      curUserId: curUser.id,
+      friendId: friendExist.id,
+    };
     const [isFriend, sentRequest, receivedRequest] = await Promise.all([
       checkIfFriend(idsObj),
       checkSentRequests(idsObj),
@@ -119,4 +120,35 @@ export async function addFriend({ curUserEmail, friendEmail }) {
   } catch (err) {
     throw new Error(err.message);
   }
+}
+
+export async function getRequests({ queryKey }) {
+  const [_, curUserId] = queryKey;
+  try {
+    const { data } = await supabase
+      .from("friend_requests")
+      .select("*")
+      .eq("receiver_id", curUserId);
+
+    return data;
+  } catch (err) {
+    console.log("ERROR HERE 💥💥💥:", err.message);
+    throw new Error(err.message);
+  }
+}
+
+export async function getRequesterDetails(requests) {
+  const promisesArr = requests.map(async (request) => {
+    const { data } = await supabase
+      .from("users")
+      .select("email, id, name, image")
+      .eq("id", request.requester_id)
+      .single();
+
+    return { ...request, requesterDetails: data };
+  });
+
+  const requestsWithDetails = await Promise.all(promisesArr);
+
+  return requestsWithDetails;
 }
