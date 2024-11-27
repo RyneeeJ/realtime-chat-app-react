@@ -152,3 +152,11 @@ export async function getRequesterDetails(requests) {
 
   return requestsWithDetails;
 }
+
+export async function rejectRequest(id) {
+  try {
+    await supabase.from("friend_requests").delete().eq("id", id);
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}

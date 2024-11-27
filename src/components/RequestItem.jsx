@@ -1,8 +1,12 @@
+import { useRejectRequest } from "../hooks/useRejectRequest";
 import Button from "./Button";
 
-function RequestItem({ requester }) {
+function RequestItem({ requester, requestId }) {
   const { name, email, image } = requester;
 
+  const { reject, isPending } = useRejectRequest();
+
+  const handleRejectRequest = () => reject(requestId);
   return (
     <li className="flex items-center gap-4 py-2">
       <div className="aspect-square w-20 overflow-hidden rounded-full xs:w-24 md:w-20">
@@ -18,10 +22,15 @@ function RequestItem({ requester }) {
           <div className="mb-3 text-sm xs:text-base sm:text-lg">{email}</div>
         </div>
         <div className="space-x-3">
-          <Button color="blue" size="small">
+          <Button disabled={isPending} color="blue" size="small">
             Accept
           </Button>
-          <Button color="white" size="small">
+          <Button
+            disabled={isPending}
+            onClick={handleRejectRequest}
+            color="white"
+            size="small"
+          >
             Decline
           </Button>
         </div>

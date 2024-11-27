@@ -16,7 +16,11 @@ function RequestsList() {
   return (
     <ul className="space-y-3">
       {requestsWithDetails.map((request) => (
-        <RequestItem key={request.id} requester={request.requesterDetails} />
+        <RequestItem
+          key={request.id}
+          requester={request.requesterDetails}
+          requestId={request.id}
+        />
       ))}
       {requests.length === 0 && (
         <p className="text-lg text-gray-400 md:text-xl">
