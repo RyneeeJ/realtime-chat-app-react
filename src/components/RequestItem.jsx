@@ -1,12 +1,16 @@
+import { useAcceptRequest } from "../hooks/useAcceptRequest";
 import { useRejectRequest } from "../hooks/useRejectRequest";
+
 import Button from "./Button";
 
-function RequestItem({ requester, requestId }) {
-  const { name, email, image } = requester;
+function RequestItem({ requester, requestId, curUserId }) {
+  const { name, email, image, id: friendId } = requester;
 
-  const { reject, isPending } = useRejectRequest();
+  const { reject, isRejecting } = useRejectRequest();
+  const { accept, isAccepting } = useAcceptRequest();
 
   const handleRejectRequest = () => reject(requestId);
+  const handleAcceptRequest = () => accept({ curUserId, friendId, requestId });
   return (
     <li className="flex items-center gap-4 py-2">
       <div className="aspect-square w-20 overflow-hidden rounded-full xs:w-24 md:w-20">
@@ -22,11 +26,16 @@ function RequestItem({ requester, requestId }) {
           <div className="mb-3 text-sm xs:text-base sm:text-lg">{email}</div>
         </div>
         <div className="space-x-3">
-          <Button disabled={isPending} color="blue" size="small">
+          <Button
+            disabled={isRejecting || isAccepting}
+            onClick={handleAcceptRequest}
+            color="blue"
+            size="small"
+          >
             Accept
           </Button>
           <Button
-            disabled={isPending}
+            disabled={isRejecting || isAccepting}
             onClick={handleRejectRequest}
             color="white"
             size="small"

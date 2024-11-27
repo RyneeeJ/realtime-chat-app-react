@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useFriendRequests } from "../contexts/FriendRequestsContext";
 import { useRequesterDetails } from "../hooks/useRequesterDetails";
+import { useUser } from "../hooks/useUser";
 
 import RequestItem from "./RequestItem";
 
 function RequestsList() {
   const { requests } = useFriendRequests();
+  const { user: curUser } = useUser();
 
   const { requestsWithDetails, refetch } = useRequesterDetails(requests);
 
+  // This effect makes sure that requests array and requestsWithDetails array are always in sync
   useEffect(() => {
     refetch();
   }, [requests, refetch]);
@@ -20,6 +23,7 @@ function RequestsList() {
           key={request.id}
           requester={request.requesterDetails}
           requestId={request.id}
+          curUserId={curUser.id}
         />
       ))}
       {requests.length === 0 && (

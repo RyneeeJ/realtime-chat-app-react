@@ -160,3 +160,23 @@ export async function rejectRequest(id) {
     throw new Error(err.message);
   }
 }
+
+export async function acceptRequest({ curUserId, friendId, requestId }) {
+  const idsArr = [curUserId, friendId].sort();
+  try {
+    const promisesArr = [
+      // insert row in friends table in db
+      await supabase
+        .from("friends")
+        .insert([{ user1_id: idsArr.at(0), user2_id: idsArr.at(1) }]),
+      // delete row in friend_requests table in db
+      await supabase.from("friend_requests").delete().eq("id", requestId),
+    ];
+
+    await Promise.all(promisesArr);
+
+    return null;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
