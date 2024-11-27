@@ -14,11 +14,12 @@ const variants = {
   },
 };
 
-function Button({ children, size, onClick, color, ...props }) {
+function Button({ children, size, onClick, color, disabled, ...props }) {
   return (
     <button
       onClick={onClick}
-      className={`${defaultClass} ${variants.size[size]} ${variants.color[color]}`}
+      disabled={disabled}
+      className={`${defaultClass} ${variants.size[size]} ${variants.color[color]} ${disabled && "cursor-progress"}`}
       {...props}
     >
       {children}

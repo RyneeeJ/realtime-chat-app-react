@@ -7,6 +7,7 @@ import { insertUser } from "../services/apiAuth";
 import { SliderContextProvider } from "../contexts/SliderContext";
 
 import Sidebar from "./Sidebar";
+import { FriendRequestsProvider } from "../contexts/FriendRequestsContext";
 
 function RootLayout() {
   const { user } = useUser();
@@ -26,16 +27,18 @@ function RootLayout() {
 
   return (
     <SliderContextProvider>
-      <div className="relative mx-auto flex h-full max-w-6xl flex-col overflow-x-hidden">
-        <Header />
+      <FriendRequestsProvider>
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col overflow-x-hidden">
+          <Header />
 
-        <main className="xs:px-6 flex-1 overflow-y-auto px-4 md:flex md:px-0">
-          <Sidebar />
-          <div className="md:flex-1 md:px-6">
-            <Outlet />
-          </div>
-        </main>
-      </div>
+          <main className="flex-1 overflow-y-auto px-4 xs:px-6 md:flex md:px-0">
+            <Sidebar />
+            <div className="md:flex-1 md:px-6">
+              <Outlet />
+            </div>
+          </main>
+        </div>
+      </FriendRequestsProvider>
     </SliderContextProvider>
   );
 }

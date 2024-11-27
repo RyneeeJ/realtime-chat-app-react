@@ -40,6 +40,7 @@ function AddFriendForm() {
     >
       <div className="sm:flex-1">
         <input
+          disabled={isPending}
           {...register("email", { required: "This field is required" })}
           type="email"
           placeholder="Enter friend's email"
@@ -51,7 +52,7 @@ function AddFriendForm() {
         </div>
       </div>
       <div className="self-end sm:self-start">
-        <Button color="blue" type="submit" size="medium">
+        <Button disabled={isPending} color="blue" type="submit" size="medium">
           <span className="sm:text-lg">Send Request</span>
         </Button>
       </div>
