@@ -9,10 +9,13 @@ import { SliderContextProvider } from "../contexts/SliderContext";
 import Sidebar from "./Sidebar";
 import { FriendRequestsProvider } from "../contexts/FriendRequestsContext";
 import { useRequests } from "../hooks/useRequests";
+import { FriendsProvider } from "../contexts/FriendsContext";
+import { useFriends } from "../hooks/useFriends";
 
 function RootLayout() {
   const { user } = useUser();
-  const { data: requests, isFetching } = useRequests(user.id);
+  const { requests, isFetchingRequests } = useRequests(user.id);
+  const { friends, isFetchingFriends } = useFriends(user.id);
 
   useEffect(() => {
     async function createUser() {
@@ -34,22 +37,25 @@ function RootLayout() {
   ]);
 
   // TODO: use suspense later
-  if (isFetching) return <p>LOADING SOMETHING...</p>;
+  if (isFetchingRequests || isFetchingFriends)
+    return <p>LOADING SOMETHING...</p>;
 
   return (
     <SliderContextProvider>
-      <FriendRequestsProvider initialRequests={requests} curUserId={user.id}>
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col overflow-x-hidden">
-          <Header />
+      <FriendsProvider initialFriends={friends} curUserId={user.id}>
+        <FriendRequestsProvider initialRequests={requests} curUserId={user.id}>
+          <div className="relative mx-auto flex h-full max-w-6xl flex-col overflow-x-hidden">
+            <Header />
 
-          <main className="flex-1 overflow-y-auto px-4 xs:px-6 md:flex md:px-0">
-            <Sidebar />
-            <div className="md:flex-1 md:px-6">
-              <Outlet />
-            </div>
-          </main>
-        </div>
-      </FriendRequestsProvider>
+            <main className="flex-1 overflow-y-auto px-4 xs:px-6 md:flex md:px-0">
+              <Sidebar />
+              <div className="md:flex-1 md:px-6">
+                <Outlet />
+              </div>
+            </main>
+          </div>
+        </FriendRequestsProvider>
+      </FriendsProvider>
     </SliderContextProvider>
   );
 }

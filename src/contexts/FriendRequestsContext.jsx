@@ -46,7 +46,7 @@ export function FriendRequestsProvider({
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useFriendRequests() {
+export function useRequestsContext() {
   const context = useContext(FriendRequests);
   return context;
 }

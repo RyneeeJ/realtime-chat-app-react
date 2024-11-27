@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getRequests } from "../services/apiFriends";
 
 export function useRequests(curUserId) {
-  const { data, isFetching } = useQuery({
+  const { data: requests, isFetching: isFetchingRequests } = useQuery({
     queryKey: ["requests", curUserId],
     queryFn: getRequests,
     throwOnError: true,
   });
 
-  return { data, isFetching };
+  return { requests, isFetchingRequests };
 }

@@ -122,6 +122,19 @@ export async function addFriend({ curUserEmail, friendEmail }) {
   }
 }
 
+export async function getUserById(id) {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, name, image, email")
+    .eq("id", id)
+    .single();
+  if (error) {
+    throw new Error("There was a problem fetching friends list");
+  }
+
+  return data;
+}
+
 export async function getRequests({ queryKey }) {
   const [_, curUserId] = queryKey;
   try {
@@ -174,8 +187,42 @@ export async function acceptRequest({ curUserId, friendId, requestId }) {
     ];
 
     await Promise.all(promisesArr);
-
     return null;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getFriends({ queryKey }) {
+  const [_, curUserId] = queryKey;
+
+  try {
+    const idPromises = [
+      await supabase
+        .from("friends")
+        .select("user2_id")
+        .eq("user1_id", curUserId),
+      await supabase
+        .from("friends")
+        .select("user1_id")
+        .eq("user2_id", curUserId),
+    ];
+    const [data1, data2] = (await Promise.all(idPromises)).map(
+      (res) => res.data,
+    );
+
+    const idArray = [...data1, ...data2].map(
+      (data) => data.user1_id || data.user2_id,
+    );
+
+    const friendsPromises = idArray.map(async (id) => {
+      const user = await getUserById(id);
+      return user;
+    });
+
+    const friends = await Promise.all(friendsPromises);
+
+    return friends;
   } catch (err) {
     throw new Error(err.message);
   }

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useFriendRequests } from "../contexts/FriendRequestsContext";
+import { useRequestsContext } from "../contexts/FriendRequestsContext";
 import { useRequesterDetails } from "../hooks/useRequesterDetails";
 import { useUser } from "../hooks/useUser";
 
 import RequestItem from "./RequestItem";
 
 function RequestsList() {
-  const { requests } = useFriendRequests();
+  const { requests } = useRequestsContext();
   const { user: curUser } = useUser();
 
   const { requestsWithDetails, refetch } = useRequesterDetails(requests);

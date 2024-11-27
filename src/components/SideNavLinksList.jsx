@@ -2,14 +2,14 @@ import { UserPlusIcon } from "@heroicons/react/24/outline";
 import SideNavLink from "./SideNavLink";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 import LogoutButton from "./LogoutButton";
-import { useFriendRequests } from "../contexts/FriendRequestsContext";
+import { useRequestsContext } from "../contexts/FriendRequestsContext";
 
 function SideNavLinksList({ onClose }) {
   const iconClass = "size-8 text-blue-600";
   const linkClass =
     "flex cursor-pointer items-center gap-3 p-4 text-lg font-semibold transition-all duration-100 hover:bg-blue-100";
 
-  const { requests } = useFriendRequests();
+  const { requests } = useRequestsContext();
   return (
     <div className="flex flex-col">
       <SideNavLink

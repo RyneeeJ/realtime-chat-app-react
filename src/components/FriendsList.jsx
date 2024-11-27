@@ -1,63 +1,19 @@
+import { useFriendsContext } from "../contexts/FriendsContext";
 import FriendItem from "./FriendItem";
 
-const friendsArr = [
-  {
-    userId: 1,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 1023,
-  },
-  {
-    userId: 2,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 2003,
-  },
-  {
-    userId: 3,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 1024,
-  },
-  {
-    userId: 4,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 1123,
-  },
-  {
-    userId: 5,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 1053,
-  },
-  {
-    userId: 6,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 1034,
-  },
-  {
-    userId: 7,
-    name: "Ryne Gandia",
-    email: "imrynegandia@gmail.com",
-    image: "/default-img.jpg",
-    chatId: 4374,
-  },
-];
-
 function FriendsList() {
+  const { friends } = useFriendsContext();
+
   return (
     <ul className="flex-1 overflow-y-scroll">
-      {friendsArr.map((friend) => (
-        <FriendItem key={friend.userId} friend={friend} />
+      {friends.map((friend) => (
+        <FriendItem key={friend.id} friend={friend} />
       ))}
+      {friends.length === 0 && (
+        <p className="px-4 text-gray-400">
+          Nothing to show here... <br /> Add someone and start chatting
+        </p>
+      )}
     </ul>
   );
 }
