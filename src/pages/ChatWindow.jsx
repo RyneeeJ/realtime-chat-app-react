@@ -1,13 +1,16 @@
+import { useParams } from "react-router-dom";
 import ChatMessages from "../components/ChatMessages";
 import ChatWindowHeader from "../components/ChatWindowHeader";
 import MessageForm from "../components/MessageForm";
 
 function ChatWindow() {
+  const { friendId } = useParams();
+
   return (
     <div className="flex h-full flex-col">
-      <ChatWindowHeader />
+      <ChatWindowHeader friendId={friendId} />
       <ChatMessages />
-      <MessageForm />
+      <MessageForm friendId={friendId} />
     </div>
   );
 }

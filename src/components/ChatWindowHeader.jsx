@@ -1,6 +1,11 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { useFriendDetails } from "../hooks/useFriendDetails";
 
-function ChatWindowHeader() {
+function ChatWindowHeader({ friendId }) {
+  const { friendDetails, isFetching } = useFriendDetails(friendId);
+
+  // TODO: use suspense and proper loader here
+  if (isFetching) return <p>LOADING HEADER</p>;
   return (
     <div
       role="banner"
@@ -11,9 +16,12 @@ function ChatWindowHeader() {
       </button>
       <div className="flex items-center gap-3 sm:gap-5">
         <div className="aspect-square w-12 overflow-hidden rounded-full sm:w-14">
-          <img src="/default-image.jpg" alt="Ryne Gandia" />
+          <img
+            src={friendDetails.image || "/default-image.jpg"}
+            alt="Ryne Gandia"
+          />
         </div>
-        <div className="text-xl font-semibold">Ryne Gandia</div>
+        <div className="text-xl font-semibold">{friendDetails.name}</div>
       </div>
     </div>
   );

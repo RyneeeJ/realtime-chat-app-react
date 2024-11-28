@@ -20,11 +20,15 @@ export function FriendsProvider({ children, initialFriends, curUserId }) {
             new: { user1_id, user2_id },
           } = payload;
 
+          // if one of the userIDs match the id of the current user,
           if (user1_id === curUserId || user2_id === curUserId) {
+            // extract the id of the friend
             const friendId = [user1_id, user2_id].find(
               (id) => id !== curUserId,
             );
+            // get friend details in the db
             const newFriend = await getUserById(friendId);
+            // update friends state
             setFriends((friends) => [newFriend, ...friends]);
           }
         },
