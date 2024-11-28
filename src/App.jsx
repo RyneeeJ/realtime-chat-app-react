@@ -14,6 +14,8 @@ import ErrorFallback from "./components/ErrorFallback";
 import PublicRoute from "./components/PublicRoute";
 import PageNotFound from "./pages/PageNotFound";
 import { Suspense } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,7 @@ const router = createBrowserRouter([
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<p>LOADING NAPAKAANGAS</p>}>
             <RootLayout />
+            <ToastContainer />
           </Suspense>
         </ErrorBoundary>
       </ProtectedRoute>

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 import { compareAsc } from "date-fns";
+import { toast } from "react-toastify";
 
 const Conversations = createContext({
   conversations: {},
@@ -27,6 +28,9 @@ export function ConversationsProvider({ children, curUserId }) {
               ...convos,
               [friendId]: [...convos[friendId], payload.new],
             }));
+
+            // temporary
+            if (receiver_id === curUserId) toast(payload.new.content);
           }
         },
       )

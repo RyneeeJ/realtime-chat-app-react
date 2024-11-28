@@ -65,6 +65,12 @@ function MessageForm({ friendId }) {
           onChange={handleChange}
           rows={1}
           placeholder="Enter your message..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault(); // Prevents newline on Enter
+              handleSubmit(onSubmit)(); // Triggers form submission
+            }
+          }}
         />
         <button disabled={isPending} type="submit" className="self-end">
           <PaperAirplaneIcon className="size-10 text-blue-600" />
