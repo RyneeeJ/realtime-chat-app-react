@@ -23,6 +23,7 @@ function ChatMessages({ friendId }) {
     scrollToBottom();
   }, []);
 
+  if (!messages) return <p>Loading messages</p>;
   return (
     <div className="flex-1 overflow-auto">
       <ul className="flex flex-col gap-5">
@@ -33,6 +34,11 @@ function ChatMessages({ friendId }) {
             friendId={friendId}
           />
         ))}
+        {messages?.length === 0 && (
+          <p className="px-4 text-gray-400">
+            No messages for this conversation
+          </p>
+        )}
       </ul>
       <div ref={bottomRef} />
     </div>

@@ -15,8 +15,8 @@ import { ConversationsProvider } from "../contexts/ConversationContext";
 
 function RootLayout() {
   const { user } = useUser();
-  const { requests, isFetchingRequests } = useRequests(user.id);
-  const { friends, isFetchingFriends } = useFriends(user.id);
+  const { requests } = useRequests(user.id);
+  const { friends } = useFriends(user.id);
 
   useEffect(() => {
     async function createUser() {
@@ -36,10 +36,6 @@ function RootLayout() {
     user.user_metadata.avatar_url,
     user.id,
   ]);
-
-  // TODO: use suspense later
-  if (isFetchingRequests || isFetchingFriends)
-    return <p>LOADING SOMETHING...</p>;
 
   return (
     <SliderContextProvider>

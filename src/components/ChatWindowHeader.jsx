@@ -2,10 +2,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useFriendDetails } from "../hooks/useFriendDetails";
 
 function ChatWindowHeader({ friendId }) {
-  const { friendDetails, isFetching } = useFriendDetails(friendId);
+  const { friendDetails } = useFriendDetails(friendId);
 
-  // TODO: use suspense and proper loader here
-  if (isFetching) return <p>LOADING HEADERRRRRRR</p>;
   return (
     <div
       role="banner"

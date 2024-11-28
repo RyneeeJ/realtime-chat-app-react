@@ -9,6 +9,7 @@ export function useUser() {
   } = useQuery({
     queryKey: ["user"],
     queryFn: getCurrentUser,
+    refetchOnMount: false,
   });
 
   return {

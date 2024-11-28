@@ -13,6 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./components/ErrorFallback";
 import PublicRoute from "./components/PublicRoute";
 import PageNotFound from "./pages/PageNotFound";
+import { Suspense } from "react";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,9 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <RootLayout />
+          <Suspense fallback={<p>LOADING NAPAKAANGAS</p>}>
+            <RootLayout />
+          </Suspense>
         </ErrorBoundary>
       </ProtectedRoute>
     ),

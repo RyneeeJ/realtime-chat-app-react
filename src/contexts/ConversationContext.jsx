@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 import { compareAsc } from "date-fns";
 
@@ -7,14 +7,25 @@ const Conversations = createContext({
   fetchMessages: () => {},
 });
 
-/*
-const initialConversations = {
-  asd123: messagesArray,
-};
-*/
 export function ConversationsProvider({ children, curUserId }) {
   const [conversations, setConversations] = useState({});
 
+  useEffect(() => {
+    const channel = supabase
+      .channel("messages-channel")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "messages" },
+        (payload) => {
+          console.log("Change received!", payload);
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
   const fetchMessages = async (friendId) => {
     if (conversations[friendId]) return;
     const messagesPromises = [

@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getFriends } from "../services/apiFriends";
 
 export function useFriends(curUserId) {
-  const { data: friends, isFetching: isFetchingFriends } = useQuery({
+  const { data: friends } = useSuspenseQuery({
     queryKey: ["friends", curUserId],
     queryFn: getFriends,
   });
 
-  return { friends, isFetchingFriends };
+  return { friends };
 }
