@@ -9,7 +9,7 @@ function ChatWindow() {
   return (
     <div className="flex h-full flex-col">
       <ChatWindowHeader friendId={friendId} />
-      <ChatMessages />
+      <ChatMessages friendId={friendId} />
       <MessageForm friendId={friendId} />
     </div>
   );

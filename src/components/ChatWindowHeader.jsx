@@ -5,7 +5,7 @@ function ChatWindowHeader({ friendId }) {
   const { friendDetails, isFetching } = useFriendDetails(friendId);
 
   // TODO: use suspense and proper loader here
-  if (isFetching) return <p>LOADING HEADER</p>;
+  if (isFetching) return <p>LOADING HEADERRRRRRR</p>;
   return (
     <div
       role="banner"

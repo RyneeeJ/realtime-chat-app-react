@@ -5,6 +5,7 @@ export function useFriendDetails(friendId) {
   const { data: friendDetails, isFetching } = useQuery({
     queryKey: ["friend-details", friendId],
     queryFn: () => getUserById(friendId),
+    refetchOnMount: false,
   });
 
   return { friendDetails, isFetching };
