@@ -1,10 +1,14 @@
 import { useEffect, useRef } from "react";
 import ChatMessageItem from "./ChatMessageItem";
 import { useConversationsContext } from "../contexts/ConversationContext";
+import { markMessagesAsRead } from "../services/apiMessages";
+import { useUser } from "../hooks/useUser";
 
 function ChatMessages({ friendId }) {
+  const { user: curUser } = useUser();
   const bottomRef = useRef(null);
-  const { fetchMessages, conversations } = useConversationsContext();
+  const { fetchMessagesOnMount, conversations, setUnreadCounts } =
+    useConversationsContext();
   const messages = conversations[friendId];
 
   useEffect(() => {
@@ -15,8 +19,15 @@ function ChatMessages({ friendId }) {
   }, [messages]);
 
   useEffect(() => {
-    fetchMessages(friendId);
-  }, [friendId, fetchMessages]);
+    fetchMessagesOnMount(friendId);
+  }, [friendId, fetchMessagesOnMount]);
+
+  useEffect(() => {
+    markMessagesAsRead({ friendId, curUserId: curUser.id });
+    setUnreadCounts((obj) => {
+      return { ...obj, [friendId]: 0 };
+    });
+  }, [curUser.id, friendId, setUnreadCounts]);
 
   if (!messages) return <p>Loading messages</p>;
 

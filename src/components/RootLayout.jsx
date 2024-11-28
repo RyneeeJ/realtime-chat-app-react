@@ -12,11 +12,14 @@ import { useRequests } from "../hooks/useRequests";
 import { FriendsProvider } from "../contexts/FriendsContext";
 import { useFriends } from "../hooks/useFriends";
 import { ConversationsProvider } from "../contexts/ConversationContext";
+import { useUnreadCounts } from "../hooks/useUnreadCounts";
 
 function RootLayout() {
   const { user } = useUser();
   const { requests } = useRequests(user.id);
   const { friends } = useFriends(user.id);
+  const friendsIdsArr = friends.map((friend) => friend.id);
+  const { initialUnreadCounts } = useUnreadCounts(friendsIdsArr, user.id);
 
   useEffect(() => {
     async function createUser() {
@@ -41,7 +44,10 @@ function RootLayout() {
     <SliderContextProvider>
       <FriendsProvider initialFriends={friends} curUserId={user.id}>
         <FriendRequestsProvider initialRequests={requests} curUserId={user.id}>
-          <ConversationsProvider curUserId={user.id}>
+          <ConversationsProvider
+            curUserId={user.id}
+            initialUnreadCounts={initialUnreadCounts}
+          >
             <div className="relative mx-auto flex h-full max-w-6xl flex-col overflow-x-hidden">
               <Header />
 

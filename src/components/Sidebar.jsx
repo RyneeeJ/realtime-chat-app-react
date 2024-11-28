@@ -5,7 +5,7 @@ import SideNavLinksList from "./SideNavLinksList";
 
 function Sidebar() {
   return (
-    <aside className="hidden w-80 overflow-auto border-r border-gray-400 md:flex md:flex-col lg:w-96">
+    <aside className="hidden w-[340px] overflow-auto border-r border-gray-400 md:flex md:flex-col lg:w-96">
       <SideNavHeader />
       <Friends />
       <SideNavLinksList />
