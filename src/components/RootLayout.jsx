@@ -47,7 +47,7 @@ function RootLayout() {
 
               <main className="flex-1 overflow-y-auto px-4 xs:px-6 md:flex md:px-0">
                 <Sidebar />
-                <div className="md:flex-1 md:px-6">
+                <div className="h-full md:flex-1 md:px-6">
                   <Outlet />
                 </div>
               </main>

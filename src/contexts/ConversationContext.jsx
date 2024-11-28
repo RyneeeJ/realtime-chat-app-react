@@ -17,7 +17,17 @@ export function ConversationsProvider({ children, curUserId }) {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "messages" },
         (payload) => {
-          console.log("Change received!", payload);
+          const { receiver_id, sender_id } = payload.new;
+          // if the new message inserted in the db belongs to the current user and his/her friend,
+          if (receiver_id === curUserId || sender_id === curUserId) {
+            // extract the friendId
+            const friendId = sender_id === curUserId ? receiver_id : sender_id;
+            // add the message to the conversation with that friend
+            setConversations((convos) => ({
+              ...convos,
+              [friendId]: [...convos[friendId], payload.new],
+            }));
+          }
         },
       )
       .subscribe();
@@ -25,7 +35,8 @@ export function ConversationsProvider({ children, curUserId }) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [curUserId]);
+
   const fetchMessages = async (friendId) => {
     if (conversations[friendId]) return;
     const messagesPromises = [
@@ -48,12 +59,10 @@ export function ConversationsProvider({ children, curUserId }) {
       (a, b) => compareAsc(a.created_at, b.created_at),
     );
 
-    setConversations((convos) => {
-      return {
-        ...convos,
-        [friendId]: messages,
-      };
-    });
+    setConversations((convos) => ({
+      ...convos,
+      [friendId]: messages,
+    }));
   };
 
   return (
