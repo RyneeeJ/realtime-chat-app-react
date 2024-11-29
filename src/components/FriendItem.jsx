@@ -45,11 +45,3 @@ function FriendItem({ friend }) {
 }
 
 export default FriendItem;
-
-/*
-<div className="ml-3 h-6 w-6 rounded-full bg-blue-600 font-bold text-slate-100 md:ml-auto">
-            <span className="flex items-center justify-center">
-              {unreadMessages}
-            </span>
-          </div>
-*/

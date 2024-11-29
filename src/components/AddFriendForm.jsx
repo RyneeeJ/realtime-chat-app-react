@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Button from "./Button";
 import { useUser } from "../hooks/useUser";
 import { useAddFriend } from "../hooks/useAddFriend";
-import { useState } from "react";
+import Button from "./Button";
 
 function AddFriendForm() {
   const [errorState, setErrorState] = useState("");
