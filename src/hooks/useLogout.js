@@ -10,7 +10,6 @@ export function useLogout() {
   } = useMutation({
     mutationFn: signOutApi,
     onSuccess: () => {
-      console.log("Logged out!");
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error) => {

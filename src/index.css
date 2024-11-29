@@ -5,6 +5,7 @@
 :root {
   --toastify-color-light: #e5e7eb;
   --toastify-color-progress-light: #2563eb;
+  --toastify-color-success: #2563eb;
 }
 
 * {

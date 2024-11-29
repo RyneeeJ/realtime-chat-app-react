@@ -8,9 +8,6 @@ export function useLogin() {
     mutate: signIn,
   } = useMutation({
     mutationFn: signInWithGoogle,
-    onSuccess: () => {
-      console.log("Login successful!");
-    },
   });
 
   return { isPending, error, signIn };

@@ -13,7 +13,7 @@ function ChatWindow() {
   const { friends } = useFriends(user.id);
   const friendDetails = friends.find((friend) => friend.id === friendId);
 
-  useDocumentTitle(friendDetails.name);
+  useDocumentTitle(friendDetails?.name || "");
   return (
     <div className="flex h-full flex-col">
       {friendDetails && (
