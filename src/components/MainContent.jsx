@@ -9,11 +9,13 @@ import { useFriends } from "../hooks/useFriends";
 import { useUnreadCounts } from "../hooks/useUnreadCounts";
 import { useEffect } from "react";
 import { insertUser } from "../services/apiAuth";
-
+import SliderNav from "./SliderNav";
+import { useSlider } from "../contexts/SliderContext";
 function MainContent() {
   const { user } = useUser();
   const { requests } = useRequests(user.id);
   const { friends } = useFriends(user.id);
+  const { isNavOpen, handleClose } = useSlider();
 
   const friendsIdsArr = friends.map((friend) => friend.id);
 
@@ -50,6 +52,8 @@ function MainContent() {
               <Outlet />
             </div>
           </main>
+
+          <SliderNav isNavOpen={isNavOpen} onClose={handleClose} />
         </ConversationsProvider>
       </FriendRequestsProvider>
     </FriendsProvider>

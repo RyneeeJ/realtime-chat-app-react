@@ -1,6 +1,4 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import SliderNav from "./SliderNav";
-
 import { useEffect } from "react";
 import { useSlider } from "../contexts/SliderContext";
 import Logo from "./Logo";
@@ -29,8 +27,6 @@ function Header() {
           <Bars3Icon className="size-10" />
         </button>
       </div>
-
-      <SliderNav isNavOpen={isNavOpen} onClose={handleClose} />
     </>
   );
 }
