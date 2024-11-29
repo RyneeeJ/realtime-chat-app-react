@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<p>LOADING NAPAKAANGAS</p>}>
             <RootLayout />
-            <ToastContainer />
+            <ToastContainer stacked={true} />
           </Suspense>
         </ErrorBoundary>
       </ProtectedRoute>

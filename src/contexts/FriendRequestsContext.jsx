@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
+import { getUserById } from "../services/apiFriends";
+import FriendRequestToastComponent from "../components/FriendRequestToastComponent";
+import { toast } from "react-toastify";
 
 const FriendRequests = createContext({
   requests: [],
@@ -18,9 +21,12 @@ export function FriendRequestsProvider({
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "friend_requests" },
-        (payload) => {
-          if (payload.new.receiver_id === curUserId) {
+        async (payload) => {
+          const { receiver_id, requester_id } = payload.new;
+          if (receiver_id === curUserId) {
             setRequests((requests) => [payload.new, ...requests]);
+            const friend = await getUserById(requester_id);
+            toast(<FriendRequestToastComponent name={friend.name} />);
           }
         },
       )

@@ -3,6 +3,8 @@ import { supabase } from "../services/supabase";
 import { toast } from "react-toastify";
 import { fetchMessages } from "../services/apiMessages";
 import { useParams } from "react-router-dom";
+import { getUserById } from "../services/apiFriends";
+import MessageToastComponent from "../components/MessageToastComponent";
 
 const Conversations = createContext({
   conversations: {},
@@ -28,7 +30,8 @@ export function ConversationsProvider({
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "messages" },
         async (payload) => {
-          const { receiver_id, sender_id } = payload.new;
+          const { receiver_id, sender_id, content } = payload.new;
+
           // if the new message inserted in the db belongs to the current user and his/her friend,
           if (receiver_id === curUserId || sender_id === curUserId) {
             // extract the friendId
@@ -55,11 +58,17 @@ export function ConversationsProvider({
             // If the receiver is away from the conversation (conversation not mounted) increase unread counts else, do nothing
             if (paramId !== friendId)
               setUnreadCounts((obj) => {
-                return { ...obj, [friendId]: obj[friendId] + 1 };
+                const initialCount = obj[friendId] || 0;
+                return { ...obj, [friendId]: initialCount + 1 };
               });
 
             // Notify the receiver via toast
-            if (receiver_id === curUserId) toast(payload.new.content);
+            if (receiver_id === curUserId) {
+              const friend = await getUserById(friendId);
+              toast(
+                <MessageToastComponent message={content} name={friend.name} />,
+              );
+            }
           }
         },
       )

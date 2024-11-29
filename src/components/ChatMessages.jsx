@@ -27,13 +27,13 @@ function ChatMessages({ friendId }) {
     setUnreadCounts((obj) => {
       return { ...obj, [friendId]: 0 };
     });
-  }, [curUser.id, friendId, setUnreadCounts]);
+  }, [curUser?.id, friendId, setUnreadCounts]);
 
   if (!messages) return <p>Loading messages</p>;
 
   return (
     <div className="flex-1 overflow-auto">
-      <ul className="flex flex-col gap-5">
+      <ul className="flex flex-col gap-3">
         {messages?.map((message) => (
           <ChatMessageItem
             key={message.id}

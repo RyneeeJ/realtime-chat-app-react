@@ -28,7 +28,7 @@ export async function fetchMessages({ friendId, curUserId }) {
     const messagesPromises = [
       await supabase
         .from("messages")
-        .select("*")
+        .select("id, content, created_at, receiver_id, sender_id")
         .eq("sender_id", curUserId)
         .eq("receiver_id", friendId),
       await supabase

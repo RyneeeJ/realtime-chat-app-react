@@ -18,7 +18,9 @@ function RootLayout() {
   const { user } = useUser();
   const { requests } = useRequests(user.id);
   const { friends } = useFriends(user.id);
+
   const friendsIdsArr = friends.map((friend) => friend.id);
+
   const { initialUnreadCounts } = useUnreadCounts(friendsIdsArr, user.id);
 
   useEffect(() => {
