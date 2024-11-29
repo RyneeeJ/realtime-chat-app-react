@@ -3,6 +3,7 @@ import SliderNav from "./SliderNav";
 
 import { useEffect } from "react";
 import { useSlider } from "../contexts/SliderContext";
+import Logo from "./Logo";
 
 function Header() {
   const { handleClose, isNavOpen, handleOpen } = useSlider();
@@ -21,7 +22,9 @@ function Header() {
   return (
     <>
       <div className="flex h-14 items-center justify-between border-b border-gray-400 px-4">
-        <div className="text-2xl font-semibold">Logo</div>
+        <div className="text-2xl font-semibold">
+          <Logo />
+        </div>
         <button className="cursor-pointer md:hidden" onClick={handleOpen}>
           <Bars3Icon className="size-10" />
         </button>

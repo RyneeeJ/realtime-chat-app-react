@@ -1,16 +1,17 @@
 import Button from "../components/Button";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useLogin } from "../hooks/useLogin";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
-import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 function Login() {
   const { signIn } = useLogin();
+  useDocumentTitle("Login");
 
   return (
     <div className="flex h-full items-center justify-center">
       <div>
         <div className="mb-6">
-          {/* <PaperAirplaneIcon className="size-16 text-blue-600" /> */}
-          <ChatBubbleBottomCenterTextIcon className="size-20 text-blue-600" />
+          <PaperAirplaneIcon className="size-20 text-blue-600" />
         </div>
         <h2 className="mb-1 text-[2.5rem] font-bold sm:mb-6 sm:text-6xl">
           <span className="text-blue-600">React</span>Talks
