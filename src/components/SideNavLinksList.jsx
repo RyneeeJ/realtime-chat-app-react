@@ -4,6 +4,7 @@ import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { useRequestsContext } from "../contexts/FriendRequestsContext";
 import SideNavLink from "./SideNavLink";
 import LogoutButton from "./LogoutButton";
+import UnreadMessageNotif from "./UnreadMessageNotif";
 
 function SideNavLinksList({ onClose }) {
   const iconClass = "size-8 text-blue-600";
@@ -31,11 +32,7 @@ function SideNavLinksList({ onClose }) {
         <div className="flex items-center gap-3">
           <span>Friend Requests</span>
           {requests?.length > 0 && (
-            <div className="h-6 w-6 rounded-full bg-blue-600 font-bold text-slate-100">
-              <span className="flex items-center justify-center text-base">
-                {requests?.length}
-              </span>
-            </div>
+            <UnreadMessageNotif count={requests.length} />
           )}
         </div>
       </SideNavLink>

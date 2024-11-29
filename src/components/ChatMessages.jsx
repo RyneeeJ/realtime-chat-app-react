@@ -29,7 +29,12 @@ function ChatMessages({ friendId }) {
     });
   }, [curUser?.id, friendId, setUnreadCounts]);
 
-  if (!messages) return <p>Loading messages</p>;
+  if (!messages)
+    return (
+      <div className="flex-1 overflow-auto">
+        <p>Loading spinner here</p>
+      </div>
+    );
 
   return (
     <div className="flex-1 overflow-auto">
