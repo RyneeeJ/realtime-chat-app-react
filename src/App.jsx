@@ -16,6 +16,7 @@ import PageNotFound from "./pages/PageNotFound";
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "./components/Loader";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback={<p>LOADING NAPAKAANGAS</p>}>
+          <Suspense fallback={<Loader />}>
             <RootLayout />
             <ToastContainer stacked={true} />
           </Suspense>
