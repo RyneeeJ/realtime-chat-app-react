@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { SliderContextProvider } from "../contexts/SliderContext";
 import { FriendsProvider } from "../contexts/FriendsContext";
 import { FriendRequestsProvider } from "../contexts/FriendRequestsContext";
 import { ConversationsProvider } from "../contexts/ConversationContext";
@@ -39,23 +38,21 @@ function MainContent() {
     user.id,
   ]);
   return (
-    <SliderContextProvider>
-      <FriendsProvider initialFriends={friends} curUserId={user.id}>
-        <FriendRequestsProvider initialRequests={requests} curUserId={user.id}>
-          <ConversationsProvider
-            curUserId={user.id}
-            initialUnreadCounts={initialUnreadCounts}
-          >
-            <main className="flex-1 overflow-y-auto px-4 xs:px-6 md:flex md:px-0">
-              <Sidebar />
-              <div className="h-full md:flex-1 md:px-6">
-                <Outlet />
-              </div>
-            </main>
-          </ConversationsProvider>
-        </FriendRequestsProvider>
-      </FriendsProvider>
-    </SliderContextProvider>
+    <FriendsProvider initialFriends={friends} curUserId={user.id}>
+      <FriendRequestsProvider initialRequests={requests} curUserId={user.id}>
+        <ConversationsProvider
+          curUserId={user.id}
+          initialUnreadCounts={initialUnreadCounts}
+        >
+          <main className="flex-1 overflow-y-auto px-4 xs:px-6 md:flex md:px-0">
+            <Sidebar />
+            <div className="h-full md:flex-1 md:px-6">
+              <Outlet />
+            </div>
+          </main>
+        </ConversationsProvider>
+      </FriendRequestsProvider>
+    </FriendsProvider>
   );
 }
 
