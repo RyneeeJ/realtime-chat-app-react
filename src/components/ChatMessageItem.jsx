@@ -3,9 +3,9 @@ function ChatMessageItem({ message, friendId }) {
 
   return (
     <li
-      className={`max-w-64 rounded-[5px] px-3 py-1 ${sender_id === friendId ? "self-start bg-gray-200" : "self-end bg-blue-100"} `}
+      className={`rounded-[5px] ${sender_id === friendId ? "self-start bg-gray-200" : "self-end bg-blue-100"}`}
     >
-      <div>{content}</div>
+      <div className="w-fit max-w-64 break-words px-3 py-1">{content}</div>
     </li>
   );
 }
