@@ -8,8 +8,7 @@ import Loader from "./Loader";
 function ChatMessages({ friendId }) {
   const { user: curUser } = useUser();
   const bottomRef = useRef(null);
-  const { fetchMessagesOnMount, conversations, setUnreadCounts } =
-    useConversationsContext();
+  const { fetchMessagesOnMount, conversations } = useConversationsContext();
   const messages = conversations[friendId];
 
   useEffect(() => {
@@ -25,10 +24,7 @@ function ChatMessages({ friendId }) {
 
   useEffect(() => {
     markMessagesAsRead({ friendId, curUserId: curUser.id });
-    setUnreadCounts((obj) => {
-      return { ...obj, [friendId]: 0 };
-    });
-  }, [curUser?.id, friendId, setUnreadCounts]);
+  }, [curUser?.id, friendId]);
 
   return (
     <div className="relative flex-1 overflow-auto">

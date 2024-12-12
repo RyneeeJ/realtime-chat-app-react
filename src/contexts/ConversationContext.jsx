@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 import { toast } from "react-toastify";
-import { fetchMessages } from "../services/apiMessages";
+import { fetchMessages, markMessagesAsRead } from "../services/apiMessages";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../services/apiFriends";
 import MessageToastComponent from "../components/MessageToastComponent";
@@ -10,7 +10,6 @@ const Conversations = createContext({
   conversations: {},
   unreadCounts: {},
   fetchMessages: () => {},
-  setUnreadCounts: () => {},
 });
 
 export function ConversationsProvider({
@@ -21,6 +20,7 @@ export function ConversationsProvider({
   const [conversations, setConversations] = useState({});
   const [unreadCounts, setUnreadCounts] = useState({ ...initialUnreadCounts });
 
+  console.log(unreadCounts);
   const { friendId: paramId } = useParams();
 
   useEffect(() => {
@@ -61,6 +61,9 @@ export function ConversationsProvider({
                 const initialCount = obj[friendId] || 0;
                 return { ...obj, [friendId]: initialCount + 1 };
               });
+            // If the conversation is currently opened, instantly change the read status to TRUE
+            else if (paramId === friendId)
+              markMessagesAsRead({ friendId, curUserId });
 
             // Notify the receiver via toast
             if (receiver_id === curUserId) {
@@ -70,6 +73,18 @@ export function ConversationsProvider({
               );
             }
           }
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "messages" },
+        (payload) => {
+          const { receiver_id, sender_id } = payload.new;
+          if (receiver_id === curUserId)
+            console.log("Message sent to me was marked as read");
+          setUnreadCounts((obj) => {
+            return { ...obj, [sender_id]: 0 };
+          });
         },
       )
       .subscribe();
@@ -94,7 +109,6 @@ export function ConversationsProvider({
         conversations,
         fetchMessagesOnMount,
         unreadCounts,
-        setUnreadCounts,
       }}
     >
       {children}
