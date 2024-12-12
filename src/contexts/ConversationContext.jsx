@@ -20,7 +20,6 @@ export function ConversationsProvider({
   const [conversations, setConversations] = useState({});
   const [unreadCounts, setUnreadCounts] = useState({ ...initialUnreadCounts });
 
-  console.log(unreadCounts);
   const { friendId: paramId } = useParams();
 
   useEffect(() => {
@@ -80,11 +79,11 @@ export function ConversationsProvider({
         { event: "UPDATE", schema: "public", table: "messages" },
         (payload) => {
           const { receiver_id, sender_id } = payload.new;
+          // if receiver of the updated message is the current user, manually reset the unread count from the friend (sender)
           if (receiver_id === curUserId)
-            console.log("Message sent to me was marked as read");
-          setUnreadCounts((obj) => {
-            return { ...obj, [sender_id]: 0 };
-          });
+            setUnreadCounts((obj) => {
+              return { ...obj, [sender_id]: 0 };
+            });
         },
       )
       .subscribe();
